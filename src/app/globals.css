@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --color-krita: #f5f3ed;
+  --color-kol: #1a1a18;
+  --color-sand: #c8bfa8;
+  --color-lin: #e8e3d8;
+  --color-bark: #7a6e5f;
+}
+
+@theme inline {
+  --color-krita: var(--color-krita);
+  --color-kol: var(--color-kol);
+  --color-sand: var(--color-sand);
+  --color-lin: var(--color-lin);
+  --color-bark: var(--color-bark);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-dm-sans);
+}
+
+body {
+  background: var(--color-krita);
+  color: var(--color-kol);
+  font-family: var(--font-dm-sans), sans-serif;
+  font-weight: 300;
+}
