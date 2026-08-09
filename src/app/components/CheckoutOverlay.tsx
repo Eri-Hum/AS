@@ -4,25 +4,16 @@ import { useState } from "react";
 
 export default function CheckoutOverlay({ onClose }: { onClose: () => void }) {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">(
-    "idle",
-  );
+  const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
     setStatus("submitting");
-    try {
-      const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (!res.ok) throw new Error("failed");
-      setStatus("done");
-    } catch {
-      setStatus("error");
-    }
+    // POC: statisk sida utan backend. Loggar lokalt i webbläsarkonsolen
+    // istället för att spara mejlet. Byt ut mot Formspree/Mailchimp etc.
+    console.log("Alva waitlist signup:", email);
+    window.setTimeout(() => setStatus("done"), 400);
   }
 
   return (
@@ -87,11 +78,6 @@ export default function CheckoutOverlay({ onClose }: { onClose: () => void }) {
               >
                 {status === "submitting" ? "Skickar..." : "Håll mig uppdaterad"}
               </button>
-              {status === "error" && (
-                <p className="font-sans font-light text-xs text-bark">
-                  Något gick fel. Försök igen.
-                </p>
-              )}
             </form>
           </>
         )}
