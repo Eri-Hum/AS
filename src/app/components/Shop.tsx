@@ -1,43 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import CheckoutOverlay from "./CheckoutOverlay";
-
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  tagline: string;
-  description: string;
-};
-
-const products: Product[] = [
-  {
-    id: "refill-4",
-    name: "Refill 4-pack",
-    price: 99,
-    tagline: "Ett år av rena händer.",
-    description:
-      "Fyra tabletter, en flaska vatten. Räcker i ett år vid vanlig användning.",
-  },
-  {
-    id: "startkit",
-    name: "Startkit",
-    price: 399,
-    tagline: "Allt du behöver för att börja.",
-    description: "Pump av glas och keramik, plus två refills. Fyller du på själv.",
-  },
-];
+import { products } from "../lib/products";
+import { useCart } from "../lib/cart-context";
 
 export default function Shop() {
-  const [cart, setCart] = useState<Record<string, number>>({});
-  const [showCheckout, setShowCheckout] = useState(false);
-
-  const itemCount = Object.values(cart).reduce((a, b) => a + b, 0);
-
-  function addToCart(id: string) {
-    setCart((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
-  }
+  const { addItem } = useCart();
 
   return (
     <section
@@ -70,7 +37,7 @@ export default function Shop() {
               {product.description}
             </p>
             <button
-              onClick={() => addToCart(product.id)}
+              onClick={() => addItem(product.id)}
               className="mt-2 w-full border border-kol py-3 font-sans font-light text-sm tracking-[0.04em] uppercase hover:bg-kol hover:text-krita transition-colors"
             >
               Lägg i varukorg
@@ -78,24 +45,6 @@ export default function Shop() {
           </article>
         ))}
       </div>
-
-      {itemCount > 0 && (
-        <div className="w-full max-w-md flex items-center justify-between border-t border-sand/50 pt-6">
-          <span className="font-sans font-light text-sm tracking-[0.02em] text-bark">
-            {itemCount} {itemCount === 1 ? "vara" : "varor"} i varukorgen
-          </span>
-          <button
-            onClick={() => setShowCheckout(true)}
-            className="bg-kol text-krita font-sans font-light text-sm tracking-[0.04em] uppercase px-6 py-3"
-          >
-            Köp
-          </button>
-        </div>
-      )}
-
-      {showCheckout && (
-        <CheckoutOverlay onClose={() => setShowCheckout(false)} />
-      )}
     </section>
   );
 }
