@@ -1,3 +1,5 @@
+import VideoCard from "./VideoCard";
+
 const steps = [
   {
     number: "01",
@@ -42,6 +44,12 @@ export default function HowItWorks() {
           </article>
         ))}
       </div>
+      <VideoCard
+        src="/video/refill-demo"
+        poster="/images/refill-demo-poster.jpg"
+        alt="En kund lägger i en refill-tablett i Alvas pumpflaska och skruvar på pumpen."
+        label="Se påfyllningen"
+      />
     </section>
   );
 }
