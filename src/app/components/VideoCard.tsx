@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { withBasePath } from "../lib/base-path";
 
 export default function VideoCard({
   src,
@@ -25,14 +26,14 @@ export default function VideoCard({
     <div className="relative w-full aspect-[9/16] max-w-[280px] mx-auto bg-lin border border-sand/40 overflow-hidden">
       <video
         ref={videoRef}
-        poster={poster}
+        poster={withBasePath(poster)}
         controls={playing}
         playsInline
         className="w-full h-full object-cover"
         aria-label={alt}
       >
-        <source src={`${src}.webm`} type="video/webm" />
-        <source src={`${src}.mp4`} type="video/mp4" />
+        <source src={withBasePath(`${src}.webm`)} type="video/webm" />
+        <source src={withBasePath(`${src}.mp4`)} type="video/mp4" />
       </video>
       {!playing && (
         <button
